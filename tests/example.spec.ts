@@ -10,5 +10,5 @@ test('[TC-1795000093] app.qasier.com URL is correct', async ({ page }) => {
 
 test('[TC-1795009957] intentionally failing URL assertion', async ({ page }) => {
   await page.goto('https://app.qasier.com/', { waitUntil: 'domcontentloaded' });
-  await expect(page).toHaveURL('https://app.qasier.com/');
+  await expect(page).toHaveURL('https://app.qasier.com/incorrect-url'); // This assertion is intentionally incorrect to demonstrate a failing test case.
 });
