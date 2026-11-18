@@ -7,3 +7,8 @@ test('[TC-1795000093] app.qasier.com URL is correct', async ({ page }) => {
   await page.goto('https://app.qasier.com/', { waitUntil: 'domcontentloaded' });
   await expect(page).toHaveURL('https://app.qasier.com/');
 });
+
+test('[TC-1795009957] intentionally failing URL assertion', async ({ page }) => {
+  await page.goto('https://app.qasier.com/', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveURL('https://app.qasier.com/expected-failure');
+});
