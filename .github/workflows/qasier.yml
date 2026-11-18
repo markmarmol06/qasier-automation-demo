@@ -6,6 +6,10 @@ on:
       qasier_run_id:
         description: Qasier test run ID
         required: true
+      qasier_test_ids:          # optional: lets Qasier re-run only failed tests
+        description: Comma-separated test case IDs (empty = run everything)
+        required: false
+        default: ''
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -16,7 +20,14 @@ jobs:
           node-version: 20
       - run: npm install
       - run: npx playwright install --with-deps chromium
-      - run: npx playwright test
+      - name: Run tests
         env:
           QASIER_RUN_ID: ${{ inputs.qasier_run_id }}
           QASIER_API_KEY: ${{ secrets.QASIER_API_KEY }}
+          QASIER_TEST_IDS: ${{ inputs.qasier_test_ids }}
+        run: |
+          if [ -n "$QASIER_TEST_IDS" ]; then
+            npx playwright test --grep "\b(${QASIER_TEST_IDS//,/|})\b"
+          else
+            npx playwright test
+          fi
