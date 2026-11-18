@@ -1,0 +1,22 @@
+name: Qasier automation
+run-name: Qasier ${{ inputs.qasier_run_id }}   # lets Qasier find this run
+on:
+  workflow_dispatch:
+    inputs:
+      qasier_run_id:
+        description: Qasier test run ID
+        required: true
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test
+        env:
+          QASIER_RUN_ID: ${{ inputs.qasier_run_id }}
+          QASIER_API_KEY: ${{ secrets.QASIER_API_KEY }}

@@ -1,0 +1,14 @@
+{
+  "name": "qasier-automation-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tiny Playwright project for trying Qasier's Run automation (GitHub Actions) feature",
+  "scripts": {
+    "test": "playwright test",
+    "test:local": "playwright test --reporter=list"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.0.0"
+  }
+}
